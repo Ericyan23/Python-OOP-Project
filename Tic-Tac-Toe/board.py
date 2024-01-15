@@ -66,21 +66,11 @@ class Board:
                 marker_count += 1
         return marker_count == 3
 
+    def check_is_tie(self):
+        empty_counter = 0
+        for row in self.game_board:
+            empty_counter += row.count(Board.empty_cell)
+        return empty_counter == 0
 
-from move import Move
-from player import Player
-
-player = Player()
-move1 = Move(1)
-move2 = Move(4)
-move3 = Move(7)
-
-
-board = Board()
-board.print_game_board()
-board.submit_move(player, move1)
-board.submit_move(player, move2)
-board.submit_move(player, move3)
-board.print_game_board()
-
-print(board.check_game_over(player, move3))
+    def reset_board(self):
+        self.game_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
