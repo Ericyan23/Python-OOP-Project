@@ -26,7 +26,7 @@ class Deck:
         for card in self._cards:
             card.show()
 
-    def shuffer(self):
+    def shuffle(self):
         random.shuffle(self._cards)
 
     def draw(self):
