@@ -9,7 +9,7 @@ class Player:
         return self._is_computer
 
     @property
-    def decl(self):
+    def deck(self):
         return self._deck
 
     def has_empty_deck(self):

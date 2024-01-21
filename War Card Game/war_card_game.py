@@ -3,7 +3,7 @@ class WarCardGame:
     COMPUTER = 1
     TIE = 2
 
-    def __init__(self, player, computer, deck) -> None:
+    def __init__(self, player, computer, deck):
         self._player = player
         self._computer = computer
         self._deck = deck
@@ -17,7 +17,7 @@ class WarCardGame:
 
     def make_deck(self, character):
         for i in range(26):
-            card = character.draw_card()
+            card = self._deck.draw()
             character.add_card(card)
 
     def start_battle(self, cards_from_war=None):
@@ -61,20 +61,31 @@ class WarCardGame:
         else:
             return [player_card, computer_card]
 
-    def add_card_to_character(character, list_of_cards):
+    def add_card_to_character(self, character, list_of_cards):
         for card in list_of_cards:
             character.add_card(card)
 
     def start_war(self, cards_from_battle):
+        # Check if players have enough cards for a war
+        if self._player.deck.size < 3:
+            print("Player does not have enough cards for war. Player loses!")
+            return WarCardGame.COMPUTER
+        if self._computer.deck.size < 3:
+            print("Computer does not have enough cards for war. Computer loses!")
+            return WarCardGame.PLAYER
+
+        # Proceed with war if both players have enough cards
         player_cards = []
         computer_cards = []
         for i in range(3):
-            player_card = self._player.draw_card()
-            computer_card = self._computer.draw_card()
+            if self._player.deck.size > 0:
+                player_card = self._player.draw_card()
+                player_cards.append(player_card)
+            if self._computer.deck.size > 0:
+                computer_card = self._computer.draw_card()
+                computer_cards.append(computer_card)
 
-            player_cards.append(player_card)
-            computer_cards.append(computer_card)
-
+        # Hide the first two cards of each player
         print("Six hidden cards: XXX XXX")
         self.start_battle(player_cards + computer_cards + cards_from_battle)
 

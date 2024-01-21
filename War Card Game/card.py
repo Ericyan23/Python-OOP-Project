@@ -1,5 +1,5 @@
 class Card:
-    SPECIAL_CARD = {11: "Jack", 12: "Queen", 13: "King", 14: "Ace"}
+    SPECIAL_CARDS = {11: "Jack", 12: "Queen", 13: "King", 14: "Ace"}
 
     def __init__(self, suit, value):
         self._value = value

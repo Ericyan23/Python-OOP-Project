@@ -15,11 +15,9 @@ while not game.check_game_over():
     game.start_battle()
     game.print_stats()
 
-"""
     answer = input(
         "\nAre you ready for the next round?\nPress enter to continue. Enter X to stop"
     )
 
     if answer.lower() == "x":
         break
-"""

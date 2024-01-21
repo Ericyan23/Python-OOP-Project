@@ -1,14 +1,14 @@
 class Suit:
     SYMBOLS = {"clubs": "♣", "diamonds": "♦", "hearts": "♥", "spades": "♠"}
 
-    def __init__(self,description):
+    def __init__(self, description):
         self._description = description
-        self._symbols = Suit.SYMBOLS[description.lower()]
+        self._symbol = Suit.SYMBOLS[description.lower()]
 
     @property
     def description(self):
         return self._description
 
     @property
-    def symbols(self):
-        return self._symbols
+    def symbol(self):
+        return self._symbol
