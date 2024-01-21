@@ -26,26 +26,42 @@ class WarCardGame:
         player_card = self._player.draw_card()
         computer_card = self._computer.draw_card()
 
-        print(f"You card:")
-        player_card.show()
+        # Check if both players have drawn a card
+        if player_card and computer_card:
+            print("You card:")
+            player_card.show()
 
-        print(f"\nComputer Card:")
-        computer_card.show()
+            print("\nComputer Card:")
+            computer_card.show()
 
-        winner = self.get_round_winner(player_card, computer_card)
-        cards_won = self.get_card_won(player_card, computer_card, cards_from_war)
+            winner = self.get_round_winner(player_card, computer_card)
+            cards_won = self.get_card_won(player_card, computer_card, cards_from_war)
 
-        if winner == WarCardGame.PLAYER:
-            print(f"You won the round!")
-            self.add_card_to_character(self._player, cards_won)
-        elif winner == WarCardGame.COMPUTER:
-            print(f"Computer won this round.")
-            self.add_card_to_character(self._computer, cards_won)
+            if winner == WarCardGame.PLAYER:
+                print("You won the round!")
+                self.add_card_to_character(self._player, cards_won)
+            elif winner == WarCardGame.COMPUTER:
+                print("Computer won this round.")
+                self.add_card_to_character(self._computer, cards_won)
+            else:
+                print("It's a Tie!")
+                self.start_war(cards_won)
+
+            return winner
         else:
-            print(f"It's a Tie!")
-            self.start_war(cards_won)
-
-        return winner
+            # Handle the scenario where one or both players cannot draw a card
+            if not player_card or not computer_card:
+                print(
+                    "One of the players cannot draw a card. Checking for game over..."
+                )
+                game_over = self.check_game_over()
+                if game_over:
+                    return (
+                        None  # Or handle the game over scenario as per your game design
+                    )
+                else:
+                    print("Game continues...")
+                    # Optionally, you can add logic here for what happens when the game continues
 
     def get_round_winner(self, player_card, computer_card):
         if player_card.value > computer_card.value:
@@ -73,21 +89,21 @@ class WarCardGame:
         if self._computer.deck.size < 3:
             print("Computer does not have enough cards for war. Computer loses!")
             return WarCardGame.PLAYER
+        else:
+            # Proceed with war if both players have enough cards
+            player_cards = []
+            computer_cards = []
+            for i in range(3):
+                if self._player.deck.size > 0:
+                    player_card = self._player.draw_card()
+                    player_cards.append(player_card)
+                if self._computer.deck.size > 0:
+                    computer_card = self._computer.draw_card()
+                    computer_cards.append(computer_card)
 
-        # Proceed with war if both players have enough cards
-        player_cards = []
-        computer_cards = []
-        for i in range(3):
-            if self._player.deck.size > 0:
-                player_card = self._player.draw_card()
-                player_cards.append(player_card)
-            if self._computer.deck.size > 0:
-                computer_card = self._computer.draw_card()
-                computer_cards.append(computer_card)
-
-        # Hide the first two cards of each player
-        print("Six hidden cards: XXX XXX")
-        self.start_battle(player_cards + computer_cards + cards_from_battle)
+            # Hide the first two cards of each player
+            print("Six hidden cards: XXX XXX")
+            self.start_battle(player_cards + computer_cards + cards_from_battle)
 
     def check_game_over(self):
         if self._player.has_empty_deck():

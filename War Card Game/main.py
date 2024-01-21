@@ -15,6 +15,9 @@ while not game.check_game_over():
     game.start_battle()
     game.print_stats()
 
+    if game.check_game_over():
+        break  # Exit the loop if the game is over
+
     answer = input(
         "\nAre you ready for the next round?\nPress enter to continue. Enter X to stop"
     )
